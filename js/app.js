@@ -86,25 +86,38 @@ window.addEventListener("scroll", sectionPosition);
 
 // on click scroll to top
 const goToTop = () => {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 };
 
 document.getElementById("toTop").addEventListener("click", goToTop);
 
 // make nav links active
 const activeNavigation = () => {
-	let linksHolder = document.getElementById("navbar__list");
+  let linksHolder = document.getElementById("navbar__list");
   let links = linksHolder.querySelectorAll('a');
-	for (let i = 0; i < links.length; i++) {
-  		links[i].addEventListener("click", function() {
-        let current = document.getElementsByClassName("active__link");  
-    		if (current.length > 0) {
-      			current[0].className = current[0].className.replace(" active__link", "");
-    		}
-    	this.className += " active__link";
- 		});
-	};
+  for (let i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function () {
+      let current = document.getElementsByClassName("active__link");
+      if (current.length > 0) {
+        current[0].className = current[0].className.replace(" active__link", "");
+      }
+      this.className += " active__link";
+    });
+  };
 }
 
 activeNavigation();
+
+// smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
